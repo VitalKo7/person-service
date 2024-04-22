@@ -1,7 +1,7 @@
 package ait.cohort34.person.controller;
 
 import ait.cohort34.person.dto.AddressDto;
-import ait.cohort34.person.dto.CityDto;
+import ait.cohort34.person.dto.CityPopulationDto;
 import ait.cohort34.person.dto.PersonDto;
 import ait.cohort34.person.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class PersonController {
 
     @GetMapping("/ages/{ageFrom}/{ageTo}")
     public PersonDto[] findPersonsByAges(@PathVariable Integer ageFrom, @PathVariable Integer ageTo) {
-        return personService.findPersonsByAges(ageFrom, ageTo);
+        return personService.findPersonsBetweenAge(ageFrom, ageTo);
     }
 
     @PutMapping("/{id}/name/{name}")
@@ -44,7 +44,7 @@ public class PersonController {
     }
 
     @GetMapping("/population/city")
-    public CityDto[] getCitiesPopulation() {
+    public Iterable<CityPopulationDto> getCitiesPopulation() {
         return personService.getCitiesPopulation();
     }
 
@@ -55,7 +55,7 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     public PersonDto deletePersonById(@PathVariable Integer id) {
-        return personService.deletePersonById(id);
+        return personService.removePerson(id);
     }
 
 }

@@ -2,6 +2,7 @@ package ait.cohort34.person.service;
 
 import ait.cohort34.person.dto.AddressDto;
 import ait.cohort34.person.dto.CityDto;
+import ait.cohort34.person.dto.CityPopulationDto;
 import ait.cohort34.person.dto.PersonDto;
 
 public interface PersonService {
@@ -9,18 +10,22 @@ public interface PersonService {
 
     PersonDto findPersonById(Integer id);
 
-    PersonDto[] findPersonsByCity(String city);
+    PersonDto removePerson(Integer id);
 
-    PersonDto[] findPersonsByAges(Integer ageFrom, Integer ageTo);
 
     PersonDto updatePersonName(Integer id, String name);
 
-    PersonDto[] findPersonsByName(String name);
-
-    CityDto[] getCitiesPopulation();
-
     PersonDto updatePersonAddress(Integer id, AddressDto addressDto);
 
-    PersonDto deletePersonById(Integer id);
+
+    PersonDto[] findPersonsByCity(String city);
+
+    PersonDto[] findPersonsByName(String name);
+
+    PersonDto[] findPersonsBetweenAge(Integer ageFrom, Integer ageTo);
+
+    Iterable<CityPopulationDto> getCitiesPopulation();
+
+
 
 }

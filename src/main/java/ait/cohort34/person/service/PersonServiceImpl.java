@@ -2,13 +2,15 @@ package ait.cohort34.person.service;
 
 import ait.cohort34.person.dao.PersonRepository;
 import ait.cohort34.person.dto.AddressDto;
-import ait.cohort34.person.dto.CityDto;
+import ait.cohort34.person.dto.CityPopulationDto;
 import ait.cohort34.person.dto.PersonDto;
 import ait.cohort34.person.dto.exceptions.PersonNotFoundException;
+import ait.cohort34.person.model.Address;
 import ait.cohort34.person.model.Person;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +21,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Boolean addPerson(PersonDto personDto) {
-
         if (personRepository.existsById(personDto.getId())) {
             return false;
         }
-
         personRepository.save(modelMapper.map(personDto, Person.class));
         return true;
     }
@@ -35,23 +35,34 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDto[] findPersonsByCity(String city) {
-        return new PersonDto[0];
+    public PersonDto removePerson(Integer id) {
+        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
+        personRepository.delete(person);
+        return modelMapper.map(person, PersonDto.class);
     }
 
-    @Override
-    public PersonDto[] findPersonsByAges(Integer ageFrom, Integer ageTo) {
-        return new PersonDto[0];
-    }
-
+    @Transactional
     @Override
     public PersonDto updatePersonName(Integer id, String name) {
         Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
         person.setName(name);
-        personRepository.save(person);
-
+//        personRepository.save(person);    // избыточное действие при @Transactional
         return modelMapper.map(person, PersonDto.class);
+    }
 
+    @Transactional
+    @Override
+    public PersonDto updatePersonAddress(Integer id, AddressDto addressDto) {
+        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
+        person.setAddress(modelMapper.map(addressDto, Address.class));
+//        personRepository.save(person);    // избыточное действие при @Transactional
+        return modelMapper.map(person, PersonDto.class);
+    }
+
+
+    @Override
+    public PersonDto[] findPersonsByCity(String city) {
+        return new PersonDto[0];
     }
 
     @Override
@@ -60,19 +71,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public CityDto[] getCitiesPopulation() {
-        return new CityDto[0];
-    }
-
-    @Override
-    public PersonDto updatePersonAddress(Integer id, AddressDto addressDto) {
+    public PersonDto[] findPersonsBetweenAge(Integer ageFrom, Integer ageTo) {
         return null;
     }
 
     @Override
-    public PersonDto deletePersonById(Integer id) {
-        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
-        personRepository.delete(person);
-        return modelMapper.map(person, PersonDto.class);
+    public Iterable<CityPopulationDto> getCitiesPopulation() {
+        return null;
     }
 }
