@@ -1,7 +1,14 @@
 package ait.cohort34.person.dto;
 
-public class CityPopulationDto {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class CityPopulationDto {
     String city;
-    Integer population;
+    Long population;
 }
