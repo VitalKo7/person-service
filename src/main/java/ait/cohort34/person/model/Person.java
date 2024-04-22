@@ -16,14 +16,14 @@ import java.time.LocalDate;
 //@Table(name = "persons")
 public class Person {
     @Id
-    Integer id;     // int
+    Integer id;             // int
 
     @Setter
-    String name;    // varChar
+    String name;            // varChar
 
     LocalDate birthDate;    // Date
 
     @Setter
-            @Embedded
-    Address address;    // new Table
+//            @Embedded
+    Address address;        // new Table
 }
