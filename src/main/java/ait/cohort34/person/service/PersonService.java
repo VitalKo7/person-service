@@ -1,14 +1,22 @@
 package ait.cohort34.person.service;
 
-import ait.cohort34.person.dto.AddressDto;
-import ait.cohort34.person.dto.CityDto;
-import ait.cohort34.person.dto.CityPopulationDto;
-import ait.cohort34.person.dto.PersonDto;
+import ait.cohort34.person.dto.*;
+
+import java.util.List;
 
 public interface PersonService {
     Boolean addPerson(PersonDto personDto);
 
+    Boolean addEmployee(EmployeeDto employeeDto);
+
+    Boolean addChild(ChildDto childDto);
+
+
     PersonDto findPersonById(Integer id);
+
+    List<ChildDto> findAllChildren();
+
+    List<EmployeeDto> findEmployeesBySalary(Integer salaryMin, Integer salaryMax);
 
     PersonDto removePerson(Integer id);
 
@@ -25,7 +33,6 @@ public interface PersonService {
     PersonDto[] findPersonsBetweenAge(Integer ageFrom, Integer ageTo);
 
     Iterable<CityPopulationDto> getCitiesPopulation();
-
 
 
 }
